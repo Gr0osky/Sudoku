@@ -16,6 +16,8 @@ bool boardComplete(vector<vector<int>> &board){
 
 bool check(int k, vector<vector<int>> &board, int i, int j){
 
+    // blocks  --> 0-2, 3-5, 6-8 (values for both rows and columns or i or j)
+
     int blockRow = (int)(i/3);
     int blockCol = (int)(j/3);
 
@@ -52,7 +54,7 @@ void solver(vector<vector<int>> &board, int curRow, int curCol, vector<vector<ve
     if(calls%100000==0){
         cout << calls << endl;
     }
-    // blocks  --> 0-2, 3-5, 6-8 (values for both rows and columns or i or j)
+
     bool checked = false;
     for(int i = curRow;  i < 9; i++){
         for(int j = 0; j < 9; j++){
