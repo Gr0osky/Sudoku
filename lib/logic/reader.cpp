@@ -1,4 +1,4 @@
-// reads puzzles
+// reads puzzles from puzzles.bin and feeds to generate_window.dart in the windows folder.
 #include <vector>
 #include <ios>
 #include <iostream>
@@ -11,7 +11,7 @@ using namespace std;
 // easy - 5-30 (diff - 1)
 // medium - 30-45 (diff - 2)
 // hard - 45 to 60 (diff - 3)
-void makePuzzle(vector<vector<int>> &board, random_device &rd, mt19937 &gen, int diff){
+void makePuzzle(vector<vector<int>> &board, mt19937 &gen, int diff){
     int emptyBlocks = 0;
     switch(diff){
         case 1: {
@@ -40,8 +40,14 @@ void makePuzzle(vector<vector<int>> &board, random_device &rd, mt19937 &gen, int
 
 
 
-int main(){
-    ifstream inFile("../data/puzzles.bin", ios::in | ios::binary);
+int main(int argc, char* argv[]){
+
+    int diff = 1; // default easy
+    if(argc > 1){
+        diff = stoi(argv[1]);
+    }
+
+    ifstream inFile("./lib/data/puzzles.bin", ios::in | ios::binary);
     if(!inFile){
         cout << "no file";
         return 0;
@@ -63,8 +69,7 @@ int main(){
     }
     inFile.close();
 
-    int diff = 1; //default easy
-    makePuzzle(board, rd, gen, diff);
+    makePuzzle(board, gen, diff);
 
     for(vector<int> row: board){
         for(int n: row){
