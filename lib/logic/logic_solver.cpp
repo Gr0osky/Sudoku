@@ -1,7 +1,7 @@
+// solves a given sudoku
 #include <vector>
 #include <iostream>
 using namespace std;
-long long calls = 0;
 
 bool boardComplete(vector<vector<int>> &board){
     for(int i = 0; i < 9; i++){
@@ -49,19 +49,22 @@ bool check(int k, vector<vector<int>> &board, int i, int j){
 }
 
 // NOTE:  0 default value
-void solver(vector<vector<int>> &board, int curRow, int curCol, vector<vector<vector<int>>> &solutions){
-    calls++;
-    if(calls%100000==0){
-        cout << calls << endl;
+void solver(vector<vector<int>> &board, int curRow, int curCol, bool &solFound){
+
+
+    if(solFound == true){
+        return;
+    }
+
+    if(boardComplete(board)){
+        solFound = true;
+        return;
     }
 
     bool checked = false;
     for(int i = curRow;  i < 9; i++){
         for(int j = 0; j < 9; j++){
-            if((i==8) &&(j==8)&&(board[i][j]!=0)&&boardComplete(board)){
-                solutions.push_back(board);
-                return;
-            }
+
             if(i == curRow && j==0){
                 j += curCol;
             }
@@ -74,7 +77,10 @@ void solver(vector<vector<int>> &board, int curRow, int curCol, vector<vector<ve
                     checked = true;
                     if(check(k, board, i, j) == true){
                         board[i][j] = k;
-                        solver(board, i, j, solutions);
+                        solver(board, i, j, solFound);
+                        if(solFound == true){
+                            return;
+                        }
                         board[i][j] = 0;
                     }
                 }
@@ -91,39 +97,23 @@ void solver(vector<vector<int>> &board, int curRow, int curCol, vector<vector<ve
 }
 
 int main(){
-    vector<vector<vector<int>>> solutions;
+    bool solFound = false;
+    vector<vector<int>> board(9, vector<int>(9));
 
-    // test case
-    // vector<vector<int>> board(9, vector<int>(9));
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            cin >> board[i][j];
+        }
+    }
 
-    // for(int i = 0 ; i < 9; i++){
-    //     for(int j = 0; j < 9;  j++){
-    //         cout << "(" << i << "," << j << "): ";
-    //         cin >>  board[i][j];
-    //     }
-    // }
-    vector<vector<int>> board = {
-        {5,3,0,0,7,0,0,0,0},
-        {6,0,0,1,9,5,0,0,0},
-        {0,9,8,0,0,0,0,6,0},
-        {8,0,0,0,6,0,0,0,3},
-        {4,0,0,8,0,3,0,0,1},
-        {7,0,0,0,2,0,0,0,6},
-        {0,6,0,0,0,0,2,8,0},
-        {0,0,0,4,1,9,0,0,5},
-        {0,0,0,0,8,0,0,7,9}
-    };
-
-    solver(board, 0, 0, solutions);
+    solver(board, 0, 0, solFound);
 
     // printing solutions
-    for(vector<vector<int>> boardSol: solutions){
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                cout << boardSol[i][j] << " ";
-            }
-            cout << endl;
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            cout << board[i][j] << " ";
         }
+        cout << endl;
     }
 
     return 0;

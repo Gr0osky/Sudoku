@@ -8,19 +8,19 @@ using namespace std;
 
 
 // Difficulty Standard  (empty blocks)
-// easy - 5-30 (diff - 1)
-// medium - 30-45 (diff - 2)
+// easy - 5-10 (diff - 1)
+// medium - 10-45 (diff - 2)
 // hard - 45 to 60 (diff - 3)
 void makePuzzle(vector<vector<int>> &board, mt19937 &gen, int diff){
     int emptyBlocks = 0;
     switch(diff){
         case 1: {
-            uniform_int_distribution<> randDist(5,30);
+            uniform_int_distribution<> randDist(5,10);
             emptyBlocks = randDist(gen);
             break;
         }
         case 2: {
-            uniform_int_distribution<> randDist(31, 45);
+            uniform_int_distribution<> randDist(11, 45);
             emptyBlocks = randDist(gen);
             break;
         }

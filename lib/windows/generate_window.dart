@@ -2,7 +2,6 @@
 import "dart:io";
 
 import "package:material_ui/material_ui.dart";
-import "package:sudoku/main.dart";
 
 class GenerateWindow extends StatefulWidget {
   const GenerateWindow({super.key});
@@ -13,6 +12,8 @@ class GenerateWindow extends StatefulWidget {
 
 class _GenerateWindowState extends State<GenerateWindow> {
   int? _diff = 1;
+  int boardVer = 0;
+
   List<List<String>> board = [
     ["", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", ""],
@@ -24,6 +25,7 @@ class _GenerateWindowState extends State<GenerateWindow> {
     ["", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", ""],
   ];
+  List<String> allowed = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   // reads the values printed by reader.cpp, by breaking input into lines and reaching numbers from the lines
   Future<List<List<String>>> boardRead(int? diff) async {
@@ -43,15 +45,10 @@ class _GenerateWindowState extends State<GenerateWindow> {
 
       for (String numStr in numbers) {
         if (numStr.isNotEmpty) {
-          // the output is read as string so it has to be converted to int
           row.add(numStr);
         }
       }
       board.add(row);
-    }
-    print("Rows: ${board.length}");
-    for (List<String> row in board) {
-      print("Columns: ${row.length}");
     }
     return board;
   }
@@ -60,6 +57,7 @@ class _GenerateWindowState extends State<GenerateWindow> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: .center,
         spacing: 20.0,
         children: [
           FilledButton(
@@ -73,543 +71,83 @@ class _GenerateWindowState extends State<GenerateWindow> {
             ),
           ),
           Column(
-            spacing: 10.0,
             mainAxisAlignment: .center,
+            spacing: 20.0,
+            crossAxisAlignment: .center,
             children: [
               // The 9x9 sudoku table
-              Table(
-                border: TableBorder.all(color: Colors.white),
-                children: [
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[0][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[1][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[2][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[3][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[4][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[5][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[6][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[7][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][0]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][1]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][2]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][3]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][4]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][5]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][6]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][7]),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          child: Text(board[8][8]),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              Column(
+                mainAxisAlignment: .center,
+                children: List.generate(board.length, (i) {
+                  return Row(
+                    mainAxisAlignment: .center,
+                    children: List.generate(board[i].length, (j) {
+                      final bool edit = (board[i][j].trim() == "0");
+                      final bool boldBorderT = ((i == 3) || (i == 6));
+                      final bool boldBorderB = (i == 2) || (i == 5);
+                      final bool boldBorderL = ((j == 3) || (j == 6));
+                      final bool boldBorderR = ((j == 2) || (j == 5));
+                      return SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                color: (boldBorderT)
+                                    ? Colors.red
+                                    : Colors.white,
+                                width: 2,
+                              ),
+                              bottom: BorderSide(
+                                color: (boldBorderB)
+                                    ? Colors.red
+                                    : Colors.white,
+                                width: 2,
+                              ),
+                              left: BorderSide(
+                                color: (boldBorderL)
+                                    ? Colors.red
+                                    : Colors.white,
+                                width: 2,
+                              ),
+                              right: BorderSide(
+                                color: (boldBorderR)
+                                    ? Colors.red
+                                    : Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          child: TextFormField(
+                            key: ValueKey("$boardVer-$i-$j"),
+                            initialValue: edit ? "" : board[i][j],
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            readOnly: !edit,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: edit ? Colors.yellow : Colors.white,
+                            ),
+                            onChanged: (val) {
+                              board[i][j] = val.trim();
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  );
+                }),
               ),
               Row(
+                spacing: 10.0,
+                mainAxisAlignment: .center,
                 children: [
                   Text(
                     "Difficulty: ",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
+                  // note: the difficulty only changes the number of clues
                   DropdownMenu(
                     initialSelection: _diff,
                     label: Text("Select Difficulty"),
@@ -628,20 +166,130 @@ class _GenerateWindowState extends State<GenerateWindow> {
               ),
               FilledButton(
                 onPressed: () async {
-                  board = await boardRead(_diff);
-
+                  List<List<String>> newBoard = await boardRead(_diff);
+                  board = newBoard;
+                  boardVer++;
                   setState(() {});
                 },
                 child: Text(
                   "Generate",
-                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               FilledButton(
-                onPressed: () {},
+                // this is a dart implementation of the check function in logic.cpp
+                // note that here its being applied to all cells, whereas the logic_solver.cpp function is only applied to empty cells with specific k values.
+                onPressed: () {
+                  bool correct = true;
+                  for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                      int blockRow = (i / 3).toInt();
+                      int blockCol = (j / 3).toInt();
+
+                      // check in block
+                      for (int x = 3 * blockRow; x < 3 * (blockRow + 1); x++) {
+                        for (
+                          int y = 3 * blockCol;
+                          y < 3 * (blockCol + 1);
+                          y++
+                        ) {
+                          if (x == i && y == j) {
+                            continue;
+                          }
+                          if (board[x][y] == board[i][j]) {
+                            correct = false;
+                            break;
+                          }
+                        }
+                        if (correct == false) {
+                          break;
+                        }
+                      }
+
+                      if (correct == false) {
+                        break;
+                      }
+
+                      // check in column
+                      for (int x = 0; x < 9; x++) {
+                        if (x == i) {
+                          continue;
+                        }
+                        if (board[x][j] == board[i][j]) {
+                          correct = false;
+                          break;
+                        }
+                      }
+
+                      // check in row
+                      for (int y = 0; y < 9; y++) {
+                        if (y == j) {
+                          continue;
+                        }
+                        if (board[i][y] == board[i][j]) {
+                          correct = false;
+                          break;
+                        }
+                      }
+
+                      // check for validity of entered values
+                      bool validVal = false;
+                      for (int n = 0; n < 9; n++) {
+                        if (board[i][j].trim() == allowed[n]) {
+                          validVal = true;
+                        }
+                      }
+                      if (validVal == false) {
+                        correct = false;
+                        break;
+                      }
+                    }
+                    if (correct == false) {
+                      break;
+                    }
+                  }
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        icon: Icon(
+                          correct ? Icons.check_circle : Icons.cancel,
+                          color: correct ? Colors.green : Colors.red,
+                          size: 60,
+                        ),
+                        title: Text(
+                          correct ? "Correct!" : "Wrong solution",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: correct ? Colors.green : Colors.red,
+                          ),
+                        ),
+                        content: Text(
+                          correct
+                              ? "Great job, i genuinely cant solve most sudokus without a computing algorithm."
+                              : "Try again! Any block, row or column shall not have repeating digits.",
+                          textAlign: .center,
+                        ),
+                        actionsAlignment: .center,
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(correct ? "Next" : "Retry"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 child: Text(
-                  "Start Solving",
-                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  "Submit solution",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

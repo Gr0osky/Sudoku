@@ -1,4 +1,4 @@
-// generates puzzles
+// generates puzzles and saves them in lib/data/puzzles.bin
 #include <ios>
 #include <vector>
 #include <iostream>

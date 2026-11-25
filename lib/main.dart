@@ -1,6 +1,7 @@
 // home page is here
 import 'package:material_ui/material_ui.dart';
 import 'package:sudoku/windows/generate_window.dart';
+import 'package:sudoku/windows/solver_window.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,7 +63,14 @@ class MyHomePage extends StatelessWidget {
                   child: const Text('Generate Sudoku'),
                 ),
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SolverWindow(),
+                      ),
+                    );
+                  },
                   style: FilledButton.styleFrom(fixedSize: const Size(200, 50)),
                   child: const Text('Solve Sudoku'),
                 ),
